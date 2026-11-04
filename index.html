@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>品牌服饰库存｜闲鱼投放策略方案</title>
+<style>
+:root{
+  --ink:#0f1720; --ink2:#374651; --muted:#6d7d8a; --line:#e2e8ee;
+  --bg:#f4f6f9; --card:#fff;
+  --brand:#d9480f; --brand-d:#b03a08; --brand-l:#fff1e8;
+  --gold:#c8901a; --gold-l:#fffaef;
+  --red:#d94a2e; --red-l:#fff4f2;
+  --blue:#2f6df6; --blue-l:#eff3fe;
+  --purple:#6b46c9;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;font-size:14px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px 70px}
+.hero{background:linear-gradient(135deg,#26140a 0%,#4a2510 52%,#2f1808 100%);color:#fff;padding:42px 0 34px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-150px;top:-150px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(217,72,15,.35),transparent 66%)}
+.hero::before{content:"";position:absolute;left:-90px;bottom:-170px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(200,144,26,.16),transparent 68%)}
+.hero .wrap{padding-bottom:0;position:relative;z-index:2}
+.eyebrow{display:inline-block;font-size:11px;letter-spacing:.18em;color:#f5b98f;border:1px solid rgba(245,185,143,.36);padding:4px 11px;border-radius:3px;margin-bottom:16px}
+.hero h1{font-size:30px;line-height:1.3;font-weight:700;letter-spacing:-.6px}
+.hero h1 em{font-style:normal;color:#f2a06e}
+.hero p.sub{color:#d6bfae;font-size:13.5px;margin-top:12px;max-width:780px;line-height:1.78}
+.meta{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:20px;font-size:12.5px;color:#c4a48d}
+.meta b{color:#fff;font-weight:600}
+.verdict{margin-top:20px;background:rgba(255,255,255,.07);border-left:3px solid var(--brand);padding:13px 17px;border-radius:0 6px 6px 0;font-size:13.5px;color:#f7ece1;line-height:1.8;max-width:940px}
+.verdict b{color:#f2a06e}
+.tabs{position:sticky;top:0;z-index:40;background:rgba(244,246,249,.96);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-bottom:22px}
+.tabs-in{max-width:1100px;margin:0 auto;display:flex;gap:2px;overflow-x:auto;padding:0 18px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs-in::-webkit-scrollbar{display:none}
+.tabs button{border:0;background:none;padding:13px 15px;font-size:13.5px;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;font-family:inherit;transition:color .15s}
+.tabs button:hover{color:var(--ink)}
+.tabs button.on{color:var(--brand-d);border-bottom-color:var(--brand);font-weight:600}
+.panel{display:none}
+.panel.on{display:block;animation:fade .22s ease}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:26px 28px;margin-bottom:16px}
+h2{font-size:20px;margin-bottom:6px;letter-spacing:-.2px;line-height:1.4}
+h2 .n{color:var(--brand);font-family:ui-monospace,Menlo,monospace;font-size:13px;margin-right:8px;vertical-align:2px}
+.desc{color:var(--muted);font-size:13px;margin-bottom:20px;line-height:1.78}
+h3{font-size:15px;margin:26px 0 11px;padding-left:10px;border-left:3px solid var(--brand);line-height:1.35}
+h3:first-child{margin-top:0}
+h4{font-size:13px;margin-bottom:7px;color:var(--ink)}
+p{font-size:13.5px;color:var(--ink2);margin-bottom:10px;line-height:1.8}
+ul,ol{font-size:13.5px;color:var(--ink2);padding-left:19px;line-height:1.8}
+li{margin-bottom:5px}
+strong{color:var(--ink);font-weight:600}
+code{background:#f6efe9;padding:1px 5px;border-radius:3px;font-size:12px;font-family:ui-monospace,Menlo,monospace;color:#8f4208}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:8px;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:520px}
+th{background:#f6efe9;text-align:left;padding:9px 12px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--line);font-size:12px;white-space:nowrap}
+td{padding:10px 12px;border-bottom:1px solid #eef2f5;color:var(--ink2);vertical-align:top;line-height:1.65}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fdf9f5}
+.tw table{margin:0}
+td.c,th.c{text-align:center}
+td.num{font-family:ui-monospace,Menlo,monospace;font-size:12.5px;white-space:nowrap}
+tr.sum td{background:#f5f7fa;font-weight:600;color:var(--ink)}
+.grid{display:grid;gap:13px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.box{border:1px solid var(--line);border-radius:8px;padding:16px 18px;background:#fbfcfd}
+.box h4{font-size:13px;margin-bottom:7px;color:var(--ink)}
+.box p{font-size:12.5px;margin-bottom:0;color:var(--muted);line-height:1.72}
+.box ul{font-size:12.5px;margin-top:7px;color:var(--muted);padding-left:16px;line-height:1.72}
+.kpi{display:flex;flex-direction:column;gap:2px;background:#fff;border:1px solid var(--line);border-top:3px solid var(--brand);border-radius:0 0 8px 8px;padding:15px 17px}
+.kpi .l{font-size:11.5px;color:var(--muted)}
+.kpi .v{font-size:25px;font-weight:700;letter-spacing:-1px;color:var(--ink);line-height:1.22}
+.kpi .s{font-size:11.5px;color:var(--brand-d);margin-top:1px}
+.kpi.gd{border-top-color:var(--gold)} .kpi.gd .s{color:#8a6410}
+.kpi.bl{border-top-color:var(--blue)} .kpi.bl .s{color:#2b56c0}
+.kpi.rd{border-top-color:var(--red)} .kpi.rd .s{color:#b23f28}
+.note{border-left:3px solid var(--gold);background:var(--gold-l);padding:13px 16px;font-size:13px;color:#6b5320;border-radius:0 6px 6px 0;margin:14px 0;line-height:1.8}
+.warn{border-left:3px solid var(--red);background:var(--red-l);padding:13px 16px;font-size:13px;color:#8c3423;border-radius:0 6px 6px 0;margin:14px 0;line-height:1.8}
+.ok{border-left:3px solid var(--brand);background:var(--brand-l);padding:13px 16px;font-size:13px;color:#12457e;border-radius:0 6px 6px 0;margin:14px 0;line-height:1.8}
+.info{border-left:3px solid var(--blue);background:var(--blue-l);padding:13px 16px;font-size:13px;color:#1f3f96;border-radius:0 6px 6px 0;margin:14px 0;line-height:1.8}
+.note b,.warn b,.ok b,.info b{color:inherit;font-weight:700}
+.tag{display:inline-block;font-size:11px;padding:1.5px 7px;border-radius:99px;background:#eef3f6;color:#47606c;margin:0 3px 3px 0;white-space:nowrap;line-height:1.6}
+.tag.g{background:#e8f1fc;color:#1a4a94}
+.tag.y{background:#fdf3dc;color:#8a6410}
+.tag.r{background:#fdeeea;color:#b23f28}
+.tag.b{background:#eaf0fe;color:#2b56c0}
+.tag.p{background:#f0eafd;color:#553a9e}
+.code{background:#0f1720;color:#c9d9e2;border-radius:9px;overflow:hidden;border:1px solid #1e2b36;margin:11px 0}
+.code-h{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;background:#16232e;border-bottom:1px solid #22323f;font-size:11.5px;color:#8fa4b2;gap:10px}
+.code-h .cp{background:var(--brand);color:#fff;border:0;border-radius:5px;padding:4px 11px;font-size:11.5px;font-weight:600;cursor:pointer;font-family:inherit;flex:0 0 auto}
+.code-h .cp:hover{background:#e07b3a}
+.code pre{white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;line-height:1.82;padding:16px 18px;color:#c9d9e2}
+.code pre b{color:#f2a06e;font-weight:600}
+.code pre i{color:#d9a93b;font-style:normal}
+.chk{list-style:none;padding:0}
+.chk li{display:flex;gap:9px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed #eceff2;font-size:13px}
+.chk li:last-child{border-bottom:0}
+.chk .bx{flex:0 0 14px;height:14px;border:1.5px solid #c2ccd4;border-radius:3px;margin-top:4px}
+.footer{text-align:center;font-size:11.5px;color:#9aa9b4;margin-top:28px;line-height:2}
+@media(max-width:820px){ .g3,.g4{grid-template-columns:1fr 1fr} }
+@media(max-width:640px){
+  body{font-size:13.5px}
+  .wrap{padding:0 13px 60px}
+  .hero{padding:30px 0 26px}
+  .hero h1{font-size:22px;line-height:1.36}
+  .hero p.sub{font-size:12.5px}
+  .verdict{font-size:12.5px;padding:11px 14px}
+  .card{padding:18px 16px;border-radius:9px}
+  h2{font-size:17px}
+  h3{font-size:14px;margin:22px 0 10px}
+  .tabs-in{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:7px 10px;overflow:visible}
+  .tabs button{padding:9px 5px;font-size:11.5px;border:1px solid var(--line);border-radius:7px;border-bottom-width:1px;text-align:center;line-height:1.3;white-space:normal;min-height:40px;display:flex;align-items:center;justify-content:center}
+  .tabs button.on{border-color:var(--brand);background:var(--brand-l)}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  table{font-size:12px;min-width:460px}
+  th,td{padding:8px 9px}
+  .kpi .v{font-size:21px}
+}
+@media(max-width:380px){ .tabs-in{grid-template-columns:repeat(2,1fr)} }
+
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">XIAnYU AD STRATEGY · 2026</span>
+    <h1>品牌服饰库存｜闲鱼投放策略方案<br><em>选品模型 · 账号矩阵 · 投放测算 · 合规红线</em></h1>
+    <p class="sub">基于客户 10,087 件在库库存的真实结构（品牌分层 / 价格带 / 品类 / 季节占比），叠加闲鱼平台品类数据（冬季保暖品类搜索增速、客单转化带、视频点击系数），输出可直接执行的选品四层模型、账号矩阵、标题库与投放计划。</p>
+    <div class="meta">
+      <span>库存体量：<b>10,087 件在库</b></span>
+      <span>覆盖：<b>男装 / 女装 / 童装</b></span>
+      <span>首期配置：<b>3 个账号 · 120 条商品</b></span>
+      <span>版本：<b>V1.0 / 2026-11</b></span>
+    </div>
+    <div class="verdict">
+      <b>核心判断：</b>这是"库存清转"生意，赚的是<b>周转速度</b>，不是单件毛利。闲鱼打法三件事：<b>①踩窗口</b>——冬季保暖品类搜索量同比 +67%、成交周期 5.2 天（全年均值 8.7），库存里 3,301 件冬装（羽绒服 803 件、均价 ¥116）正好落在平台 ¥50–150 最佳转化带；<b>②分层跑</b>——利润款打付费、走量款养权重、锚点款立人设；<b>③守合规</b>——品牌服饰是假货投诉高发区，货源凭证与"二手如实描述"是生死线（第 10 章）。
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tabs-in" id="tabs">
+    <button class="on" data-p="p1">01 方案总览</button>
+    <button data-p="p2">02 生意与买家</button>
+    <button data-p="p3">03 选品模型</button>
+    <button data-p="p4">04 账号矩阵</button>
+    <button data-p="p5">05 标题库</button>
+    <button data-p="p6">06 定价策略</button>
+    <button data-p="p7">07 内容与转化</button>
+    <button data-p="p8">08 投放策略</button>
+    <button data-p="p9">09 数据与履约</button>
+    <button data-p="p10">10 合规红线</button>
+    <button data-p="p11">11 执行计划</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ 01 ============ -->
+<div class="panel on" id="p1">
+  <div class="card">
+    <h2><span class="n">01</span>方案总览</h2>
+    <p class="desc">一页看懂：库存长什么样、闲鱼怎么打、投多少、怎么验收。</p>
+
+    <h3>1.1 库存画像（基于客户《品牌库存》表全量统计）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:20%">维度</th><th>数据</th></tr></thead>
+        <tbody>
+          <tr><td><b>总在库</b></td><td>10,087 件（全部已入库未出库）；入库高峰 2026 年 8 月（2,174 件），持续有上新</td></tr>
+          <tr><td><b>品牌结构</b></td><td>品牌件 5,570（55%）：运动户外 2,577（阿迪 745 / 耐克 574 / 李宁 212 / 彪马 162 / Champion 148 / 斐乐 120…）、快时尚潮流 1,330（ZARA 268 / 优衣库 300 / ONLY 187 / Gap 117…）、其他品牌 1,663；非品牌 4,517（45%）</td></tr>
+          <tr><td><b>性别结构</b></td><td>男装 4,900 ｜ 女装 4,441 ｜ 童装 400</td></tr>
+          <tr><td><b>季节结构</b></td><td>冬装 3,301 件（33%）：卫衣 1,255 / 羽绒服 803 / 毛衣 499 / 棉服 154 / 冲锋衣 122 / 毛呢大衣 115</td></tr>
+          <tr><td><b>价格结构</b></td><td>售价中位 ¥40、均值 ¥52.8；≤¥50 占 66%，¥80 以上仅 10%；品类均价：羽绒服 ¥116 &gt; 棉服 ¥83 &gt; 卫衣 ¥68 &gt; 短款外套 ¥54 &gt; 长裤 ¥40</td></tr>
+          <tr><td><b>高价锚点</b></td><td>少量高价值款：加拿大鹅羽绒服 ¥600、Miu Miu 单鞋 ¥600、FURLA / BALLY 包 ¥450、巴黎世家 ¥450——量小但立人设</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>1.2 闲鱼平台品类数据（选品依据）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:34%">平台数据</th><th style="width:16%">数值</th><th>对本库存的含义</th></tr></thead>
+        <tbody>
+          <tr><td>冬季（11 月–1 月）保暖品类搜索量同比增速</td><td class="num"><b>+67%</b></td><td>当前正是冬装窗口期，库存中 3,301 件冬装应第一批上架</td></tr>
+          <tr><td>冬装成交周期 vs 全年均值</td><td class="num"><b>5.2 天 vs 8.7 天</b></td><td>冬装周转快一倍，优先清、清得动</td></tr>
+          <tr><td>闲鱼买家最佳转化客单带</td><td class="num"><b>¥50–150</b>（转化 8.3%）</td><td>羽绒服均价 ¥116、棉服 ¥83 恰好落在黄金带——它们是利润主力</td></tr>
+          <tr><td>非品牌羽绒服平均下架率 vs 平台均值</td><td class="num"><b>43% vs 28%</b></td><td>冬装打付费只投品牌款，非品牌靠自然流与打包清</td></tr>
+          <tr><td>带实拍视频的商品点击率系数</td><td class="num"><b>×3.6</b></td><td>视频化是本方案的第一内容纪律（第 07 章）</td></tr>
+          <tr><td>买家决策偏好："性价比 + 真实描述"</td><td class="num"><b>78%</b></td><td>详情页如实写瑕疵反而提升转化，遮挡掩饰才是流失源</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>数据口径说明：</b>以上平台数据来自公开行业报告与闲鱼商家侧数据报道（艾瑞咨询二手电商报告、闲鱼商家成长中心等），为选品方向依据；落地执行时以投放后台当期实际数据为准校准。
+    </div>
+
+    <h3>1.3 关键数字</h3>
+    <div class="grid g4">
+      <div class="kpi"><span class="l">首批上架</span><span class="v">120 条</span><span class="s">3 号 · 4 周铺完</span></div>
+      <div class="kpi gd"><span class="l">首月主推带</span><span class="v">¥50–150</span><span class="s">羽绒服 / 卫衣 / 棉服</span></div>
+      <div class="kpi bl"><span class="l">首月投放预算</span><span class="v">¥2,000</span><span class="s">三段释放（可扩）</span></div>
+      <div class="kpi rd"><span class="l">首月目标</span><span class="v">60 单</span><span class="s">冬装占 7 成</span></div>
+    </div>
+
+    <h3>1.4 推进节奏</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:14%">阶段</th><th style="width:12%">时间</th><th style="width:34%">核心任务</th><th style="width:18%">要达到什么</th><th>进入下一阶段的标准</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>短期</b><br><span class="tag g">跑通</span></td>
+            <td>第 1–30 天</td>
+            <td>3 号建仓、首批 120 条上架（冬装优先）；视频化生产跑顺；付费投放三段释放</td>
+            <td>验证四层选品模型：哪层动销最快、哪层赚毛利</td>
+            <td>月成交 ≥60 件；S/A 层动销率 ≥15%；算清成交成本</td>
+          </tr>
+          <tr>
+            <td><b>中期</b><br><span class="tag b">放大</span></td>
+            <td>第 31–60 天</td>
+            <td>胜出层复制加号；开启批发打包线；12 月底前完成春装选品切换预案</td>
+            <td>单号模型可复制；批发线成为第二增长曲线</td>
+            <td>月成交 ≥300 件；付费 ROI ≥1.5；批发单占比 ≥15%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info">
+      <b>为什么不排第三个月：</b>冬装窗口在 12 月底关闭，届时库存结构将切换（春装 + 清尾冬装）。先用 60 天把"选品—内容—投放"模型在冬装上跑准，换季时原样套用到春装，模型资产可复用。
+    </div>
+  </div>
+</div>
+
+<!-- ============ 02 ============ -->
+<div class="panel" id="p2">
+  <div class="card">
+    <h2><span class="n">02</span>生意与买家：谁在买、为什么买</h2>
+    <p class="desc">低价品牌服饰在闲鱼不是"卖二手衣服"，是卖"用零头价买到牌子货"。看清三类买家的动机差异，选品和话术才不会拧着来。</p>
+
+    <h3>2.1 三类核心买家</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:16%">买家</th><th style="width:28%">典型画像</th><th style="width:26%">他们搜什么</th><th>对应打法</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>捡漏年轻人</b><br><span class="tag r">主力</span></td>
+            <td>学生 / 工作 1–3 年的租房青年，认品牌但预算紧，买"低于专柜价一个数量级"的品牌基础款与潮流款</td>
+            <td>品牌词 + 品类词：阿迪达斯卫衣、北面冲锋衣、优衣库九分裤、ZARA 外套</td>
+            <td>S / A 层品牌款主战场；标题堆品牌词与品类词；单件零售</td>
+          </tr>
+          <tr>
+            <td><b>宝妈家庭</b><br><span class="tag y">稳定</span></td>
+            <td>给全家人买衣服，看重成色与价格，童装决策最快（孩子长得快、消耗大）</td>
+            <td>童装羽绒服、儿童加厚外套、亲子装、家庭打包</td>
+            <td>童装 400 件单独成线；详情突出"洗过消毒 / 无瑕疵"</td>
+          </tr>
+          <tr>
+            <td><b>打包采购商</b><br><span class="tag b">隐藏利润</span></td>
+            <td>地摊主、乡镇店主、直播选品员，按斤 / 按包批量进货，单次客单高、决策快、复购稳</td>
+            <td>库存尾货打包、服装批发按斤、清仓处理一手货源</td>
+            <td>B 层 + 非品牌走"打包批发"专款（第 06 章定价），是清 4,517 件非品牌的主力通道</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="ok">
+      <b>关键结论：零售做品牌、批发做尾货。</b>品牌件（55%）单件零售吃利润；非品牌件（45%）散卖动销慢，打包给采购商才是正确出口——<b>两条线都要开，别让 4,500 件非品牌件占着货架和资金。</b>
+    </div>
+
+    <h3>2.2 为什么是闲鱼（而不是其他平台）</h3>
+    <div class="grid g3">
+      <div class="box" style="border-top:3px solid var(--brand)">
+        <h4>搜索场景天然匹配</h4>
+        <p>闲鱼买家习惯"品牌词 + 品类词"搜索，正是本库存的标题结构。不需要造需求，承接现成搜索即可起步。</p>
+      </div>
+      <div class="box" style="border-top:3px solid var(--gold)">
+        <h4>低价带成交密度高</h4>
+        <p>¥50–150 是平台验证过的最佳转化带，与本库存的羽绒服 / 棉服 / 卫衣价格带重合。<b>库存里最贵的那批货，恰好是闲鱼上最好卖的那批货。</b></p>
+      </div>
+      <div class="box" style="border-top:3px solid var(--blue)">
+        <h4>二手心智降低信任门槛</h4>
+        <p>买家默认"二手 = 便宜 + 真实"，如实描述瑕疵反而加分。库存尾货/轻微瑕疵在闲鱼不是减分项，是价格合理性的解释。</p>
+      </div>
+    </div>
+
+    <h3>2.3 竞争概况</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:22%">对手类型</th><th style="width:34%">特征</th><th>我们的相对优势</th></tr></thead>
+        <tbody>
+          <tr><td><b>个人闲置卖家</b></td><td>单件、无供应链、卖完即止，描述随意、发货慢</td><td>我们有货 depth（同款可补）+ 48h 稳定发货 + 尺寸表齐全</td></tr>
+          <tr><td><b>档口 / 尾货商</b></td><td>量大但内容粗糙，实拍图少、无视频、话术生硬</td><td>视频化（点击 ×3.6）+ 如实描述 + 客服响应速度</td></tr>
+          <tr><td><b>电商清仓店</b></td><td>价格透明但运费套路多、退货苛刻</td><td>闲鱼可议价的"人的温度" + 打包批发灵活定价</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 03 ============ -->
+<div class="panel" id="p3">
+  <div class="card">
+    <h2><span class="n">03</span>选品模型：四层结构，各司其职</h2>
+    <p class="desc">10,087 件不可能全上。选品按"平台热度 × 库存深度 × 价格带"三维筛成四层：<b>S 层赚利润、A 层做溢价、B 层养权重、C 层立人设。</b>首批 120 条按下表分配。</p>
+
+    <h3>3.1 四层选品总表</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:10%">层级</th><th style="width:22%">选什么</th><th style="width:20%">库存依据</th><th style="width:14%">价格带</th><th style="width:12%">首批条数</th><th>角色</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>S 层</b><br><span class="tag r">利润主力</span></td>
+            <td>品牌羽绒服 / 棉服 / 冲锋衣（厚款、当季、品牌优先）</td>
+            <td>羽绒服 803 件（均价 ¥116）+ 棉服 154 + 冲锋衣 122</td>
+            <td class="num">¥80–180</td>
+            <td class="num">40 条</td>
+            <td>踩冬装 +67% 窗口，客单落在 ¥50–150 黄金转化带，付费投放主对象</td>
+          </tr>
+          <tr>
+            <td><b>A 层</b><br><span class="tag y">溢价款</span></td>
+            <td>运动潮流品牌卫衣 / 外套 / 裤（阿迪、耐克、李宁、Champion、北面等）</td>
+            <td>运动户外共 2,577 件；卫衣 1,255 件（均价 ¥68）</td>
+            <td class="num">¥50–120</td>
+            <td class="num">40 条</td>
+            <td>品牌搜索词热、买家出价意愿强，自然流 + 付费双吃</td>
+          </tr>
+          <tr>
+            <td><b>B 层</b><br><span class="tag b">走量款</span></td>
+            <td>长裤 / T恤 / 毛衣 / 衬衫等基础款（含优衣库、ZARA 等快时尚低价款）</td>
+            <td>长裤 2,205 / T恤 490 / 毛衣 499 / 衬衫 320</td>
+            <td class="num">¥19–49</td>
+            <td class="num">30 条</td>
+            <td>低客单高频成交，养账号权重与好评，喂饱捡漏买家</td>
+          </tr>
+          <tr>
+            <td><b>C 层</b><br><span class="tag p">锚点款</span></td>
+            <td>加拿大鹅 / Miu Miu / FURLA / BALLY / 巴黎世家等高价款</td>
+            <td>库存高端款约百件</td>
+            <td class="num">¥300–600</td>
+            <td class="num">10 条</td>
+            <td>不指望快销：立"专业二手店"人设、拉高店铺客单预期、接高价值咨询</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>3.2 单品筛选标准（每条上架前过一遍）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:16%">维度</th><th>标准</th></tr></thead>
+        <tbody>
+          <tr><td><b>季节</b></td><td>当前优先冬装（卫衣/羽绒服/棉服/毛衣/冲锋衣）；T恤短裤等夏装延后到 12 月底做"反季捡漏"款再上</td></tr>
+          <tr><td><b>品牌</b></td><td>S/A 层必须品牌可识别（吊牌、领标、印花清晰可拍）；品牌存疑的归入 B 层或打包线，不上品牌标题</td></tr>
+          <tr><td><b>成色</b></td><td>无硬伤（破洞、大污渍、缺扣）才可入 S/A 层；轻微瑕疵款进 B 层并如实标注</td></tr>
+          <tr><td><b>库存深度</b></td><td>同品类可售 &gt;50 件的（长裤/卫衣/外套）做"系列化"铺法：同模板批量出标题，占词占位</td></tr>
+          <tr><td><b>拍摄可行性</b></td><td>能拍 15 秒视频（上身/挂烫/细节）的优先；不能视频化的靠后</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn">
+      <b>选品纪律：</b>平台数据明确显示<b>非品牌羽绒服下架率 43%</b>——非品牌冬装不打付费、不上主力位，全部走 B 层与打包线。<b>别用付费预算去测平台已经验证过的坑。</b>
+    </div>
+
+    <h3>3.3 首批 120 条的品类分布</h3>
+    <div class="grid g2">
+      <div class="box">
+        <b>S 层 40 条</b>
+        <ul>
+          <li>品牌羽绒服 25 条（阿迪 / 北面 / 雅鹿 / UR 等品牌款优先，中位 ¥120）</li>
+          <li>棉服 / 冲锋衣 10 条（北面、哥伦比亚类户外品牌优先）</li>
+          <li>厚毛衣 / 毛呢大衣 5 条</li>
+        </ul>
+      </div>
+      <div class="box">
+        <b>A 层 40 条</b>
+        <ul>
+          <li>运动卫衣 20 条（adidas / NIKE / 李宁 / Champion / FILA）</li>
+          <li>运动外套 / 棒球服 / 冲锋衣 12 条</li>
+          <li>运动长裤 8 条（含李宁 / UA）</li>
+        </ul>
+      </div>
+      <div class="box">
+        <b>B 层 30 条</b>
+        <ul>
+          <li>长裤 12 条（优衣库 / ZARA 女裤优先，¥25 带）</li>
+          <li>毛衣 / 针织开衫 10 条（¥20–40 带）</li>
+          <li>衬衫 / T恤打底 8 条</li>
+        </ul>
+      </div>
+      <div class="box">
+        <b>C 层 10 条</b>
+        <ul>
+          <li>加拿大鹅羽绒服 2–3 条（¥600 档）</li>
+          <li>轻奢包（FURLA / BALLY）3–4 条（¥450 档）</li>
+          <li>设计师款鞋服 3 条（Miu Miu / 巴黎世家）</li>
+        </ul>
+        <i style="font-size:12px;color:#8f4208">C 层每条都必须可提供验货渠道，见第 10 章。</i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 04 ============ -->
+<div class="panel" id="p4">
+  <div class="card">
+    <h2><span class="n">04</span>账号矩阵：3 个号三种人格</h2>
+    <p class="desc">档口模式的账号逻辑与单品类获客不同：<b>买家进主页要看到"这家店全是我要的东西"</b>。所以按人群分层建号，每个号内商品同调，主页即货架。</p>
+
+    <h3>4.1 三号分工</h3>
+    <div class="grid g3">
+      <div class="box" style="border-left:3px solid var(--brand)">
+        <h4>号 1「品牌运动仓」</h4>
+        <ul>
+          <li>承接：A 层全部 + S 层运动品牌冬装</li>
+          <li>人群：年轻男性 / 学生 / 潮流爱好者</li>
+          <li>人设：球鞋潮服玩家，"仓库里全是好货"</li>
+          <li>调性：潮流感封面 + 街头风文案</li>
+        </ul>
+      </div>
+      <div class="box" style="border-left:3px solid var(--gold)">
+        <h4>号 2「品牌女装精选」</h4>
+        <ul>
+          <li>承接：S 层女装羽绒服 + 快时尚女装 + 童装</li>
+          <li>人群：年轻女性 / 宝妈</li>
+          <li>人设：选款眼光好的女主理人，"每件都验过"</li>
+          <li>调性：实拍上身 / 挂烫图，柔光暖调</li>
+        </ul>
+      </div>
+      <div class="box" style="border-left:3px solid var(--blue)">
+        <h4>号 3「档口清仓仓」</h4>
+        <ul>
+          <li>承接：B 层走量款 + 非品牌尾货 + 打包批发款</li>
+          <li>人群：捡漏党 + 打包采购商</li>
+          <li>人设：实体档口清货，"价格低到没理由挑"</li>
+          <li>调性：仓库实拍 + 直接的价格表达</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>4.2 账号基建（每号上线前完成）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:18%">要素</th><th>要求</th></tr></thead>
+        <tbody>
+          <tr><td><b>实名与认证</b></td><td>三号分别实名；<b>以职业卖家身份完成商家认证</b>（职业经营者被认定后监管口径更严，先合规再放量，见第 10 章）</td></tr>
+          <tr><td><b>人设五件套</b></td><td>昵称（含"仓 / 精选 / 清仓"定位词）、头像（仓库 / 挂衣杆实拍）、简介（一句话说清卖什么 + 发货快）、背景图（货架实拍）、位置（发货地如实填写）</td></tr>
+          <tr><td><b>隔离纪律</b></td><td>一机一号一网络；同款商品不在两号同价同图发布；三号词域错开（号 1 运动品牌词 / 号 2 女装快时尚词 / 号 3 清仓打包词）</td></tr>
+          <tr><td><b>发布节奏</b></td><td>每号每天 3–5 条、间隔 1 小时以上；首批 120 条用 4 周铺完，不做单日批量灌入（新号批量发布是风控信号）</td></tr>
+          <tr><td><b>每日动作</b></td><td>全量擦亮；每周 2–3 条说说（到货实拍 / 打包发货视频），维持活跃权重</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="info">
+      <b>为什么 3 号起步而不是 1 个：</b>10,087 件的库存深度足够支撑三号词域完全不重叠；且男装 / 女装 / 尾货三类人群的内容风格差异大，混在一个号会互相稀释画像。<b>增号条件：任一号月成交 ≥100 件且单号咨询承接不过来时，先复制该号再扩。</b>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 05 ============ -->
+<div class="panel" id="p5">
+  <div class="card">
+    <h2><span class="n">05</span>标题库：5 套模板 + 真实库存改造示例</h2>
+    <p class="desc">闲鱼买家按"品牌词 + 品类词"搜索，标题就是把库存翻译成搜索语言。以下模板可直接套用，示例均取自客户真实库存。</p>
+
+    <h3>5.1 标题模板 × 5</h3>
+    <div class="code">
+      <div class="code-h"><span>标题模板（S/A/B/C 层通用）</span><button class="cp">复制</button></div>
+      <pre><b>模板 1｜品牌 + 品类 + 卖点（S/A 层主力）</b>
+{品牌}{品类}{性别}｜{风格词}{保暖/版型卖点}
+例：阿迪达斯连帽卫衣男｜秋冬加绒宽松运动上衣
+
+<b>模板 2｜品类 + 场景（S 层冬装加强）</b>
+{品类}{性别}｜{季节}{场景痛点}
+例：长款羽绒服女｜冬季加厚防风通勤白鸭绒质感
+
+<b>模板 3｜品牌 + 人群（A 层人群款）</b>
+{品牌}{品类}｜{人群风格}
+例：Champion连帽卫衣｜美式街头学生党百搭
+
+<b>模板 4｜清仓 + 数量（B 层/打包款）</b>
+{品类}清仓｜{价格钩子}{形式}
+例：品牌长裤清仓｜25元起 5件打包更划算
+
+<b>模板 5｜品牌 + 型号感（C 层锚点款）</b>
+{品牌}{品类}｜{成色}{卖点}
+例：加拿大鹅羽绒服男｜派克大衣 98成 支持验货
+
+<i>规则：</i>
+· 品牌词在前 6 字内；全文 ≤30 字
+· 一条一个意图：品牌款不打"清仓"词，清仓款不硬蹭品牌词
+· 禁"正品保证 / 专柜同款 / 原单尾单"（见第 10 章）
+· 同号内主词不重复，防自我竞争</pre>
+    </div>
+
+    <h3>5.2 真实库存改造示例（可直接复制）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:12%">层级</th><th style="width:44%">上架标题（可直接复制）</th><th style="width:10%">标价</th><th>来源库存（品牌/品类）</th></tr></thead>
+        <tbody>
+          <tr><td><b>S</b></td><td>UR长款羽绒服女｜冬季连帽加厚收腰通勤</td><td class="num">¥140</td><td>Urban Revivo 羽绒服 ¥140</td></tr>
+          <tr><td><b>S</b></td><td>雅鹿儿童羽绒服｜中长款加厚保暖连帽</td><td class="num">¥120</td><td>雅鹿 童装羽绒服 ¥120</td></tr>
+          <tr><td><b>S</b></td><td>北面冲锋衣男｜三合一加绒防风户外外套</td><td class="num">¥99</td><td>THE NORTH FACE 冲锋衣</td></tr>
+          <tr><td><b>A</b></td><td>阿迪达斯连帽卫衣男｜秋冬加绒宽松运动上衣</td><td class="num">¥80</td><td>adidas 卫衣 ¥80</td></tr>
+          <tr><td><b>A</b></td><td>耐克棒球服外套男｜复古美式街头休闲夹克</td><td class="num">¥80</td><td>NIKE 短款外套 ¥80</td></tr>
+          <tr><td><b>A</b></td><td>李维斯连帽卫衣｜美式街头大LOGO秋冬加绒</td><td class="num">¥80</td><td>LEVI'S 卫衣 ¥80</td></tr>
+          <tr><td><b>B</b></td><td>优衣库九分裤女｜高腰直筒通勤百搭显瘦</td><td class="num">¥25</td><td>UNIQLO 长裤 ¥25</td></tr>
+          <tr><td><b>B</b></td><td>针织开衫女短款｜米白连帽春秋薄外套清仓</td><td class="num">¥29</td><td>毛衣/针织 499 件 ¥25–40 带</td></tr>
+          <tr><td><b>C</b></td><td>加拿大鹅羽绒服男｜派克大衣加厚防寒 支持验货</td><td class="num">¥600</td><td>CANADA GOOSE 羽绒服 ¥600</td></tr>
+          <tr><td><b>C</b></td><td>FURLA链条小方包｜轻奢斜挎通勤 支持验货</td><td class="num">¥450</td><td>FURLA 背包 ¥450</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>批量生产方式：</b>首批 120 条不需要 120 次创作——按"品类 + 品牌"组合套模板即可。长裤、卫衣等库存深度大的品类做系列化：同模板换颜色 / 版型词批量出标题，占位同词搜索流量的多个坑位。
+    </div>
+  </div>
+</div>
+
+<!-- ============ 06 ============ -->
+<div class="panel" id="p6">
+  <div class="card">
+    <h2><span class="n">06</span>定价策略：锚定定价 + 动态调价 + 批发线</h2>
+    <p class="desc">库存生意的定价目标不是单件利润最大化，是<b>整体周转速度 × 可接受的毛利底线</b>。三个机制配合：锚定定价建立"划算感"，动态调价处理滞销，批发线消化长尾。</p>
+
+    <h3>6.1 锚定定价法（主力零售款）</h3>
+    <p>闲鱼买家 78% 关注"性价比 + 真实描述"而非绝对最低价。定价动作：</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:20%">步骤</th><th>做法</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. 找参照</b></td><td>搜同品牌同品类在售款，取销量最高的 2–3 个标价为参照锚</td></tr>
+          <tr><td><b>2. 定位 7 折</b></td><td>主推款标价 = 参照锚 × 70% 左右，形成"同款更便宜"的感知</td></tr>
+          <tr><td><b>3. 留议价空间</b></td><td>标价上浮 10% 作为议价缓冲（闲鱼买家默认砍价，"小刀 happily、大刀拒绝"是常态）</td></tr>
+          <tr><td><b>4. 运费钩子</b></td><td>¥59 以下收运费、¥59 以上包邮——拉高连带客单，摊薄 ¥5–8 的单均运费成本</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>6.2 价格带任务表</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:16%">价格带</th><th style="width:14%">库存占比</th><th style="width:28%">对应层级</th><th>任务</th></tr></thead>
+        <tbody>
+          <tr><td><b>≤¥30</b></td><td class="num">41%</td><td>B 层走量 + 打包原料</td><td>标"清仓"直给价、不议价；同时是打包批发线的库存池</td></tr>
+          <tr><td><b>¥31–80</b></td><td class="num">48%</td><td>B 层 + A 层低段</td><td>零售主力，走锚定定价，接受小刀</td></tr>
+          <tr><td><b>¥81–180</b></td><td class="num">9%</td><td>S 层羽绒服 / A 层高端</td><td>利润主力，付费投放只投这一带；坚持 7 折锚定价</td></tr>
+          <tr><td><b>¥200+</b></td><td class="num">4%</td><td>C 层锚点</td><td>不急卖、可议、必走验货；长期挂着做人设与店铺调性</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>6.3 动态调价规则（每个滞销款的生死线）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:22%">信号</th><th style="width:36%">判断</th><th>动作</th></tr></thead>
+        <tbody>
+          <tr><td>上架 48h：收藏 &lt;15 且 0 咨询</td><td>价格或封面不对</td><td>降价 10–15% + 更换主图；仍无起色第 5 天降到底价</td></tr>
+          <tr><td>有咨询但流失于"能不能便宜"</td><td>价格贴着心理线</td><td>不降价，改送"加 9 元第二件"式连带优惠</td></tr>
+          <tr><td>7 天成交 ≥3 件且咨询密集</td><td>动销款</td><td>提价 10% 测试需求上限；同系列加铺同模板标题</td></tr>
+          <tr><td>30 天 0 成交</td><td>款式死亡</td><td>下架，转入打包批发线按斤清</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>6.4 批发打包线（消化非品牌与滞销）</h3>
+    <div class="grid g2">
+      <div class="box">
+        <b>打包款设计</b>
+        <ul>
+          <li>5 件包（杂款长裤/毛衣）：标 ¥99–129，单件折算 ¥20–26</li>
+          <li>10 件包（尾货杂款）：标 ¥199–249，单件折算 ¥20–25</li>
+          <li>童装 8 件包：标 ¥129–159（宝妈 + 采购商双吃）</li>
+        </ul>
+      </div>
+      <div class="box">
+        <b>打包线纪律</b>
+        <ul>
+          <li>描述写清"杂款不挑款、按库存随机发、瑕疵以照片为准"</li>
+          <li>打包款不得拆 S/A 层品牌款充数——品牌款进打包等于贱卖利润</li>
+          <li>采购商复购后转入微信维护（合规方式见第 10 章）是复购主力</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 07 ============ -->
+<div class="panel" id="p7">
+  <div class="card">
+    <h2><span class="n">07</span>内容与转化：视频化 + 如实描述 + 议价话术</h2>
+    <p class="desc">带实拍视频的商品点击率是图文的 3.6 倍——这是本方案内容侧的第一杠杆。内容生产的目标：<b>每天稳定产出 8–10 条视频化商品</b>，跟上上架节奏。</p>
+
+    <h3>7.1 视频批量生产 SOP（每天 1.5 小时出 10 条）</h3>
+    <div class="code">
+      <div class="code-h"><span>视频拍摄流水线</span><button class="cp">复制</button></div>
+      <pre>场景固定：挂衣杆 + 浅色背景 + 自然光（一次布置，长期复用）
+
+每条 15 秒，固定三段式：
+· 0–3s  全貌：衣服挂起，转体一圈展示版型
+· 4–9s  细节：领标 / 吊牌 / 面料纹理 / 拉链特写（品牌款必拍标）
+· 10–15s 尺寸：平铺量尺，手指点衣长 / 胸围位置
+
+批量节奏：
+· 按品类分批拍（一次拍完当天 10 件同品类，不用换背景）
+· 手机直出，不精剪——真实感就是转化力
+· 首图用视频截图 + 大字价格（封面统一模板：左上品牌角标 / 中央品类大字 / 底部价格条）</pre>
+    </div>
+
+    <h3>7.2 详情页模板（如实描述 = 信任 = 转化）</h3>
+    <div class="code">
+      <div class="code-h"><span>品牌服饰详情模板（可复制）</span><button class="cp">复制</button></div>
+      <pre>{品牌}{品类}｜{一句话卖点}
+
+【成色】二手 {9成新/95新}，无破洞无污渍，{如实写瑕疵：右袖口轻微起球}
+【尺寸】衣长 __ 胸围 __ 肩宽 __（平铺测量，误差 1-2cm）
+【面料】{吊牌/水洗标标注的面料}，已清洗消毒
+【发货】当天 4 点前下单当天发，48 小时内必发
+【售后】非质量问题不支持退换（贴身衣物例外规则见主页）；支持验货宝
+
+有疑问直接问，尺寸拿不准发身高体重我帮你判断码数。</pre>
+    </div>
+    <div class="note">
+      <b>"如实写瑕疵"不是免责声明，是转化武器：</b>平台数据显示 78% 买家最看重真实描述。写明瑕疵的商品，咨询-成交转化率反而更高——买家买的不是完美，是"不踩坑的确定性"。
+    </div>
+
+    <h3>7.3 高频话术（议价 / 成色 / 尺码）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:22%">场景</th><th>应答要点</th></tr></thead>
+        <tbody>
+          <tr><td><b>砍价</b></td><td>小刀（≤10%）爽快接受并说"给您改价"；大刀回"这个价已经是清仓价了，您拍 2 件我给您抹零头"——用连带代替降价</td></tr>
+          <tr><td><b>"是正品吗"</b></td><td>不承诺"保证正品"（合规红线），说"品牌渠道来源，支持闲鱼验货宝，鉴定费不贵，您走一个更放心"——用机制代替口头承诺</td></tr>
+          <tr><td><b>"有没有瑕疵"</b></td><td>直接发瑕疵特写图 + 一句话说明；"有瑕疵的我都拍出来了，没拍到的就是没有"</td></tr>
+          <tr><td><b>"码数合适吗"</b></td><td>要身高体重，对照尺寸表给判断；主动说"拿不准拍下试穿，不合适我们按主页规则处理"</td></tr>
+          <tr><td><b>打包采购</b></td><td>"要几件？量大走打包价"→ 引导看打包款 → 报阶梯价（5 件 / 10 件 / 30 件三档）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 08 ============ -->
+<div class="panel" id="p8">
+  <div class="card">
+    <h2><span class="n">08</span>投放策略：只投 S/A 层，算清每一单的账</h2>
+    <p class="desc">实物直购型投放与咨询获客型完全不同：<b>推广目标直接选"订单/浏览"，考核的是成交成本。</b>铁律：付费只投 S 层（¥81–180）与 A 层品牌款——B 层毛利太薄养不起点击费，C 层靠自然流。</p>
+
+    <h3>8.1 参数设置</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:16%">可调项</th><th style="width:38%">选项</th><th style="width:16%">建议</th><th>理由</th></tr></thead>
+        <tbody>
+          <tr><td><b>推广目标</b></td><td>曝光 / 浏览 / 关注收藏 / 咨询 / <b>订单</b></td><td><span class="tag g">订单为主</span></td><td>服饰是即时决策品类，直购链路短；测款期可用"浏览"</td></tr>
+          <tr><td><b>计划类型</b></td><td>套餐擦亮 / <b>自定义擦亮</b></td><td><span class="tag g">自定义</span></td><td>可控目标、可控出价、可控预算</td></tr>
+          <tr><td><b>出价方式</b></td><td><b>控成本投放</b> / 快速起量</td><td><span class="tag g">控成本</span></td><td>低客单品类必须精细核算</td></tr>
+          <tr><td><b>日预算</b></td><td>¥30 / ¥100 / 自定义</td><td><span class="tag y">¥30–50 起</span></td><td>服饰 CPC 低（约 ¥1–2），¥30 已能买到 15–30 次点击验证动销</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>8.2 盈亏测算（S 层羽绒服为例）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:30%">测算步骤</th><th style="width:22%">计算</th><th style="width:16%">结果</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>客单价</td><td>—</td><td class="num">¥116</td><td>库存羽绒服均价，恰在黄金转化带</td></tr>
+          <tr><td>商品成本</td><td>—</td><td class="num">按进货价 ×</td><td><b>需用真实进货价代入</b>；下两行按毛利 50% 示意</td></tr>
+          <tr><td>成交所需点击</td><td>转化率 3%</td><td class="num">≈ 33 次</td><td>服饰直购转化率 2–3%，冬装旺季取上限</td></tr>
+          <tr><td>单均点击成本</td><td>33 × ¥1.5</td><td class="num">≈ ¥50</td><td>服饰类 CPC 按 ¥1–2 估</td></tr>
+          <tr><td>单均毛利（毛利 50%）</td><td>116 × 50%</td><td class="num">¥58</td><td>扣点击成本后净剩 ¥8——<b>贴平</b></td></tr>
+          <tr class="sum"><td>结论</td><td colspan="3">毛利 50% 时付费仅够打平 → <b>付费的角色是"点火爆款 + 拉店铺权重"，利润靠自然流订单与连带。</b>毛利率若达 60%+（¥70），付费本身 ROI ≈ 1.4 可持续投</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="warn">
+      <b>付费的准确定位：</b>本品类付费的正确用法是<b>"选 3–5 个数据最好的 S/A 层款集中投，用付费订单把单品推上'想要/成交'热榜，再吃它带来的自然流"</b>。给每件商品撒胡椒面式的投放必亏——先让自然流数据说话（收藏/咨询），再对赢家加钱。
+    </div>
+
+    <h3>8.3 预算三段释放（首月 ¥2,000）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:12%">阶段</th><th style="width:12%">时间</th><th style="width:12%">金额</th><th style="width:14%">日预算</th><th style="width:26%">投什么</th><th>要回答的问题</th></tr></thead>
+        <tbody>
+          <tr><td><b>第 1 段</b></td><td>第 1–10 天</td><td class="num">¥0</td><td class="num">—</td><td>首批 60 条纯自然流，观察收藏/咨询</td><td>哪 10 条商品值得推？（动销率 &gt;15% 才有资格）</td></tr>
+          <tr><td><b>第 2 段</b></td><td>第 11–20 天</td><td class="num">¥600</td><td class="num">¥60/天</td><td>3 条 S 层羽绒服（自然流数据最好的）</td><td>真实成交成本多少？付费单是否带动自然流？</td></tr>
+          <tr><td><b>第 3 段</b></td><td>第 21–30 天</td><td class="num">¥1,400</td><td class="num">¥140/天</td><td>扩到 5–6 条：跑通的 3 条 + 2 条 A 层品牌款</td><td>ROI ≥1.5 的组合找到了吗？</td></tr>
+          <tr class="sum"><td colspan="2">合计</td><td class="num">¥2,000</td><td class="num">—</td><td colspan="2">每段以上一段数据为释放前提；ROI &lt;1 的计划立即停</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>调价纪律：</b>一天最多调一次、单次 ≤15%；数据没异常就不动。<b>立即停投五种情况：</b>①单计划 3 天 0 成交且花费 &gt;¥60 ②成交成本 &gt; 单件毛利 ③商品被提示"风险商品" ④同款自然流突然下滑（可能被降价竞品截流，先改价再谈投放）⑤履约接不住（打包发货爆仓）。
+    </div>
+  </div>
+</div>
+
+<!-- ============ 09 ============ -->
+<div class="panel" id="p9">
+  <div class="card">
+    <h2><span class="n">09</span>数据优化与履约</h2>
+    <p class="desc">服饰是高频低客单品类，数据优化看<b>周转</b>：每周动销率、每月库存消化件数。履约是档口模式的第二战场——发货慢一档，评分掉一档。</p>
+
+    <h3>9.1 五层漏斗与基准值（服饰直购版）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:16%">层级</th><th style="width:26%">指标</th><th style="width:22%">参考基准</th><th>不达标看哪里</th></tr></thead>
+        <tbody>
+          <tr><td><b>曝光</b></td><td>商品被搜到次数</td><td>新商品 3 天内 ≥150</td><td>标题词冷门 → 按第 05 章模板换词重发</td></tr>
+          <tr><td><b>浏览</b></td><td>曝光→点击</td><td>点击率 ≥10%</td><td>封面不行 → 换主图；服饰类视频封面优于图文</td></tr>
+          <tr><td><b>想要/收藏</b></td><td>浏览→收藏</td><td>收藏率 ≥6%</td><td>价格没打动 → 48h 规则降价换图</td></tr>
+          <tr><td><b>成交</b></td><td>收藏→付款</td><td>成交率 2–3%</td><td>看流失原因：议价失败改连带优惠；尺码犹豫补尺寸表</td></tr>
+          <tr><td><b>复购/连带</b></td><td>老客回购 + 多件订单</td><td>连带率 ≥20%</td><td>没有做"加 9 元第二件"式钩子 → 第 06 章</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>9.2 每周复盘表（直接复制）</h3>
+    <div class="code">
+      <div class="code-h"><span>周复盘模板</span><button class="cp">复制</button></div>
+      <pre>周次：__  在架商品：__ 条  本周成交：__ 件 / ¥__
+
+【分层动销】
+S 层：上架 __ 条 / 动销 __ 件（动销率 __%）→ 结论：__
+A 层：上架 __ 条 / 动销 __ 件
+B 层：上架 __ 条 / 动销 __ 件
+C 层：咨询 __ 次 / 成交 __ 件
+
+【付费】花费 ¥__ / 带来 __ 件 / 成交成本 ¥__ / ROI __
+
+【淘汰】本周下架 __ 条（30 天 0 成交款转入打包线）
+
+【一句话结论】下周最该做的一件事：__</pre>
+    </div>
+
+    <h3>9.3 履约标准（档口模式的生命线）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:20%">环节</th><th>标准</th></tr></thead>
+        <tbody>
+          <tr><td><b>发货时效</b></td><td>当天 16:00 前订单当天发，最迟 48h；发货前拍照存档（防"货不对板"纠纷举证）</td></tr>
+          <tr><td><b>物流成本</b></td><td>小件谈 3–5 元/单渠道价；¥59 以下收运费、以上包邮——运费不能吃掉 ¥25 裤子的毛利</td></tr>
+          <tr><td><b>售后规则</b></td><td>主页公示：非质量问题不退换；尺码不合可换（运费买家担）；描述不符全额退——<b>把丑话说在前面，纠纷率反而最低</b></td></tr>
+          <tr><td><b>评价运营</b></td><td>每单随附小卡片"满意请点个赞，囤货上新第一时间发你"；好评截图可用于详情页社会证明</td></tr>
+          <tr><td><b>纠纷应对</b></td><td>先退让解决小额纠纷（¥50 以下直接退，别为小钱吃差评）；平台举证通知 48h 内必须响应（逾期直接判责）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 10 ============ -->
+<div class="panel" id="p10">
+  <div class="card">
+    <h2><span class="n">10</span>合规红线：品牌服饰的生死线</h2>
+    <p class="desc">卖品牌服饰 = 站在假货投诉的高发区。闲鱼对职业卖家的监管严于个人闲置，售假后果是"退一赔三 + 封号 + 可能刑事责任"（刑法第 214 条：销售金额 5 万元以上可入刑）。<b>这一章的所有规则没有弹性。</b></p>
+
+    <h3>10.1 绝对禁止（碰一次就可能全盘归零）</h3>
+    <div class="warn">
+      <b>① 绝不碰高仿 / A货 / 尾单仿品。</b>库存里每一件品牌货都必须有可追溯来源。法律后果链条：买家投诉 → 平台下架 + 扣信用分 → 认定售假 → 消费者"退一赔三"（不足 500 按 500）→ 市场监管罚款（货值 3 倍以下）→ 金额大涉刑事责任。<br><br>
+      <b>② 绝不伪造凭证。</b>被投诉后伪造进货凭证 / 鉴定报告，平台识破后直接永久封号并移交线索。<br><br>
+      <b>③ 绝不用"正品保证 / 专柜同款 / 原单尾单 / 外贸原单"字样。</b>这类表述在纠纷时会被认定为对品质的明示担保，二手商品不适用"正品"承诺语境。
+    </div>
+
+    <h3>10.2 必须做到的四件事</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:20%">动作</th><th>标准</th></tr></thead>
+        <tbody>
+          <tr><td><b>① 货源凭证留存</b></td><td>每批库存的进货合同 / 单据 / 转账记录归档可查；<b>收到平台举证通知 48 小时内必须提交</b>，逾期直接判责</td></tr>
+          <tr><td><b>② 如实标注性质</b></td><td>二手：标成色（95 新 / 9 成新）+ 瑕疵照片；库存全新：标"库存尾货/未使用"，不冒充专柜渠道货</td></tr>
+          <tr><td><b>③ 完成商家认证</b></td><td>以职业卖家身份运营（10,000+ 件库存无法主张个人闲置），主动完成闲鱼商家资质认证；被动态认定"职业电商"后监管更严，先持证再放量</td></tr>
+          <tr><td><b>④ 高价款走验货宝</b></td><td>C 层（¥300+）主动开通支持验货宝：鉴定费低（39–99 元）而"假货责任倒置"（验出仿品由卖家承担鉴定费 + 运费 + 全额退款）——<b>这是用平台机制替你背书，比任何话术都值钱</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>10.3 表述红线对照</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:30%">❌ 禁用</th><th style="width:18%">风险</th><th>✅ 替代表述</th></tr></thead>
+        <tbody>
+          <tr><td>"正品保证""100% 正品""假一赔十"</td><td>品质担保承诺</td><td>"品牌渠道来源，支持验货宝验证"</td></tr>
+          <tr><td>"专柜同款""原单""尾单""外贸原单"</td><td>暗示仿品/灰色渠道</td><td>"品牌库存/二手正品渠道"（可举证前提下）</td></tr>
+          <tr><td>"厂家直销""工厂拿货"（无凭证）</td><td>虚假来源宣传</td><td>如实写"清仓处理/库存尾货"</td></tr>
+          <tr><td>详情图 P 掉瑕疵</td><td>货不对板纠纷</td><td>瑕疵特写照片 + 文字说明</td></tr>
+          <tr><td>私下引导加微信绕开平台交易</td><td>平台处罚 + 失去交易保障</td><td>平台内沟通成交；打包采购商另行合规维护</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>10.4 被投诉怎么办</h3>
+    <div class="grid g2">
+      <div class="box"><b>收到平台举证通知</b><br>48h 内提交进货凭证 + 商品实拍 + 聊天记录；绝不伪造材料，绝不与买家对骂（"态度恶劣"会加重处罚）。</div>
+      <div class="box"><b>商品被判违规下架</b><br>同款内容勿原样重发；对照 10.3 检查表述后整改再上；多次违规会触发账号降权。</div>
+      <div class="box"><b>买家索赔"退一赔三"</b><br>若货真且有凭证，走平台申诉与司法应诉；若货源存疑，立即下架同源批次全部商品并咨询律师——别把批次风险拖成账号风险。</div>
+      <div class="box"><b>预防机制</b><br>每月自查：高投诉品牌款（潮牌联名、经典爆款）优先走验货宝；新批次入库先"小批量上架测投诉率"，无异常再放量。</div>
+    </div>
+
+    <h3>10.5 上架前合规自查（每条商品过一遍）</h3>
+    <div class="code">
+      <div class="code-h"><span>合规 Checklist</span><button class="cp">复制</button></div>
+      <pre>□ 该品牌款有可追溯货源凭证，凭证已归档
+□ 标题与详情无"正品保证/专柜同款/原单"字样
+□ 成色如实标注，瑕疵已拍照说明
+□ 全新库存款已标注"库存尾货/未使用"
+□ C 层（¥300+）已确认支持验货宝
+□ 价格与主页明示的售后规则一致
+□ 图片为本人实拍（非网图盗图）</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 11 ============ -->
+<div class="panel" id="p11">
+  <div class="card">
+    <h2><span class="n">11</span>执行计划</h2>
+    <p class="desc">短期（第 1–30 天）按周拆、每周过关；中期（第 31–60 天）按月拆。冬装窗口有限（12 月底关闭），<b>节奏比完美更重要</b>。</p>
+
+    <h3>11.1 总览</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:16%">阶段</th><th style="width:28%">主题</th><th style="width:16%">预算</th><th>过关指标</th></tr></thead>
+        <tbody>
+          <tr><td><b>W1</b><br>第 1–7 天</td><td>建仓：3 号 + 首批 60 条冬装</td><td>¥0</td><td>3 号全部过审；60 条冬装上架；视频生产跑顺</td></tr>
+          <tr><td><b>W2</b><br>第 8–14 天</td><td>补位：铺满 120 条 + 付费点火</td><td>¥600</td><td>120 条全上架；动销率 ≥10%；付费 3 条开跑</td></tr>
+          <tr><td><b>W3</b><br>第 15–21 天</td><td>打磨：调价 + 淘汰 + 打包线</td><td>¥700</td><td>累计成交 ≥30 件；打包款出首单；找到 ROI≥1.5 组合</td></tr>
+          <tr><td><b>W4</b><br>第 22–30 天</td><td>收敛：月度复盘 + 补货决策</td><td>¥700</td><td><b>月成交 ≥60 件</b>；S/A 层动销率 ≥15%；成交成本算清</td></tr>
+          <tr><td><b>M2</b><br>第 31–60 天</td><td>放大：扩号 + 批发线 + 换季预案</td><td>按 ROI</td><td>月成交 ≥300 件；批发占比 ≥15%；春装切换预案成稿</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>11.2 短期：第 1–30 天（按周拆）</h3>
+    <div class="grid g2">
+      <div class="box">
+        <b>W1（第 1–7 天）｜建仓周 · 预算 ¥0</b>
+        <ul>
+          <li>3 个账号实名 + 商家认证 + 人设五件套（按 4.2）</li>
+          <li>首批 60 条全部冬装（S 层 30 + A 层 20 + B 层 10），过 10.5 合规 Checklist 后分批上架</li>
+          <li>视频流水线跑顺：每天 8–10 条（按 7.1 SOP）</li>
+          <li>每日全量擦亮；观察自然流收藏/咨询数据</li>
+        </ul>
+        <b>✅ 过关指标：</b>60 条全过审、视频日产能达标、≥15 条收藏 &gt;15<br>
+        <b>未过关动作：</b>零曝光商品换标题重发；点击率 &lt;10% 的换视频封面
+      </div>
+      <div class="box">
+        <b>W2（第 8–14 天）｜补位周 · 预算 ¥600</b>
+        <ul>
+          <li>补齐至 120 条（C 层 10 条上架，每条支持验货宝）</li>
+          <li>付费点火：3 条自然流最好的 S 层羽绒服 ¥20/天 × 10 天</li>
+          <li>打包批发款上架（5 件包 / 10 件包，按 6.4）</li>
+          <li>首轮动态调价：48h 无收藏款降价换图</li>
+        </ul>
+        <b>✅ 过关指标：</b>120 条全上架、累计成交 ≥10 件、付费出首单<br>
+        <b>未过关动作：</b>付费 3 天 0 成交且花费 &gt;¥60 → 换款重投
+      </div>
+      <div class="box">
+        <b>W3（第 15–21 天）｜打磨周 · 预算 ¥700</b>
+        <ul>
+          <li>付费扩至 5 条（3 条跑通款 + 2 条 A 层品牌款），¥50/天</li>
+          <li>末位 20 条淘汰（30 天 0 成交规则前置执行），转入打包线</li>
+          <li>打包款投放测试：拿 1 条打包款试投"订单"目标</li>
+          <li>话术打磨：议价/成色/尺码三场景按 7.3 复盘迭代</li>
+        </ul>
+        <b>✅ 过关指标：</b>累计成交 ≥30 件、打包线出首单、找到 ROI ≥1.5 的付费组合<br>
+        <b>未过关动作：</b>动销率 &lt;10% → 回 3.2 逐条检查选品标准执行情况
+      </div>
+      <div class="box">
+        <b>W4（第 22–30 天）｜收敛周 · 预算 ¥700</b>
+        <ul>
+          <li>月度复盘：四层动销率、成交成本、连带率、批发占比</li>
+          <li>确定"跑通组合"：哪几条商品 + 哪套定价 + 哪类内容在出单</li>
+          <li>补货决策：动销最快的品类向库存端要货（深度优先）</li>
+          <li>春装切换预案启动：盘点春装库存深度，出 M2 切换排期</li>
+        </ul>
+        <b>✅ 过关指标：</b><b>月成交 ≥60 件</b>、S/A 动销率 ≥15%、四层数据全部可算清<br>
+        <b>未过关动作：</b>成交 &lt;40 件 → 停付费，专攻内容（视频覆盖率拉满）+ 价格带复查
+      </div>
+    </div>
+
+    <h3>11.3 中期：第 31–60 天（按月拆）</h3>
+    <div class="grid g2">
+      <div class="box">
+        <b>M2（第 31–60 天）｜放大月</b>
+        <ul>
+          <li><b>扩号：</b>跑得最好的号先复制（月成交 ≥100 件触发），新号词域错开</li>
+          <li><b>批发线放量：</b>打包款从 3 条扩到 8 条；对 W3–W4 的采购商做复购维护；目标批发占比 ≥15%</li>
+          <li><b>付费加码：</b>ROI ≥1.5 的计划日预算 +50%；&lt;1 的停；总预算随毛利线性放大</li>
+          <li><b>换季切换：</b>12 月中下旬冬装降价冲刺清尾（可让利 20%），春装按四层模型重新选品上架</li>
+          <li><b>内容资产：</b>沉淀"品类 × 封面 × 文案"跑赢模板，形成批量生产标准</li>
+        </ul>
+        <b>✅ 过关指标：</b>月成交 ≥300 件、付费 ROI ≥1.5、批发占比 ≥15%、春装切换按时启动
+      </div>
+      <div class="box">
+        <b>加法原则</b>
+        <ul>
+          <li>数据证明才加：动销率 ≥15% 的层才有资格扩条数、加预算</li>
+          <li>一次一个变量：加预算的当周不动素材、不加新品</li>
+          <li>库存是资产不是负担：滞销款 30 天必进打包线，不让死款占货架</li>
+          <li>合规一票否决：任何放量动作前，先过 10.5 Checklist</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>11.4 交付验收（对客户口径）</h3>
+    <div class="tw">
+      <table>
+        <thead><tr><th style="width:20%">时间点</th><th style="width:44%">可验收项</th><th>数据口径</th></tr></thead>
+        <tbody>
+          <tr><td>第 7 天</td><td>3 账号上线 + 首批 60 条冬装全部过审 + 视频流水线运转</td><td>后台截图</td></tr>
+          <tr><td>第 14 天</td><td>120 条铺满、付费点火、打包款上线</td><td>后台截图 + 成交记录</td></tr>
+          <tr><td>第 30 天</td><td>月成交 ≥60 件、S/A 动销率 ≥15%、四层数据与成交成本算清</td><td>周复盘表汇总</td></tr>
+          <tr><td>第 60 天</td><td>月成交 ≥300 件、付费 ROI ≥1.5、批发占比 ≥15%、春装预案</td><td>月度复盘报告</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <b>预期管理：</b>第 1–2 周的核心产出是"数据与跑通模型"，第 3 周起进入放量。<b>首月验收看"月成交 ≥60 件 + 动销率"而非 GMV</b>——库存生意的第一目标是把周转模型跑通，规模是第 2 个月的事。
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function(){
+  var bar = document.getElementById('tabs');
+  function activate(tabEl){
+    if(!tabEl) return;
+    var target = document.getElementById(tabEl.dataset.p);
+    if(!target) return;
+    bar.querySelectorAll('button').forEach(function(x){ x.classList.remove('on'); });
+    document.querySelectorAll('.wrap > .panel').forEach(function(x){ x.classList.remove('on'); });
+    tabEl.classList.add('on');
+    target.classList.add('on');
+    try{
+      if(getComputedStyle(bar).display === 'flex'){
+        var st = bar.getBoundingClientRect(), r = tabEl.getBoundingClientRect();
+        if(r.left < st.left + 8) bar.scrollLeft -= (st.left + 8 - r.left);
+        else if(r.right > st.right - 8) bar.scrollLeft += (r.right - st.right + 8);
+      }
+    }catch(_){}
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  bar.addEventListener('click', function(e){
+    var t = e.target.closest('button');
+    if(t) activate(t);
+  });
+  bar.addEventListener('touchend', function(e){
+    var t = e.target.closest('button');
+    if(t){ e.preventDefault(); activate(t); }
+  }, {passive:false});
+
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('.cp');
+    if(!btn) return;
+    var pre = btn.parentElement.parentElement.querySelector('pre');
+    if(!pre) return;
+    var txt = pre.innerText, old = btn.textContent;
+    var done = function(){ btn.textContent='已复制'; setTimeout(function(){ btn.textContent=old; }, 1400); };
+    try{
+      var ta = document.createElement('textarea');
+      ta.value = txt; ta.setAttribute('readonly','');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0, txt.length);
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if(ok){ done(); return; }
+    }catch(_){}
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done).catch(function(){ alert('复制失败，请长按文本手动复制'); });
+    }else{ alert('复制失败，请长按文本手动复制'); }
+  });
+})();
+</script>
+</body>
+</html>
